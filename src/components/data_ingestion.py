@@ -22,6 +22,9 @@ class DataIngestion:
         try:
             df=pd.read_csv('notebook\data\Mumbai1.csv')
             logging.info("Read the dataset as dataframe")
+            df=df.drop(["Unnamed: 0","Children's Play Area",'Gas Connection','Jogging Track','Intercom','Clubhouse','Indoor Games','Maintenance Staff', 'Clubhouse',
+             '24x7 Security','Landscaped Gardens',],axis=1)
+            logging.info("Dropped unnecessary columns")
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
 
