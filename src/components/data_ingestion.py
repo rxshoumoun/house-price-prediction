@@ -6,6 +6,8 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformConfig
 
 @dataclass
 class DataIngestionConfig:
@@ -22,9 +24,9 @@ class DataIngestion:
         try:
             df=pd.read_csv('notebook\data\Mumbai1.csv')
             logging.info("Read the dataset as dataframe")
-            df=df.drop(["Unnamed: 0","Children's Play Area",'Gas Connection','Jogging Track','Intercom','Clubhouse','Indoor Games','Maintenance Staff', 'Clubhouse',
-             '24x7 Security','Landscaped Gardens',],axis=1)
-            logging.info("Dropped unnecessary columns")
+            # df=df.drop(["Unnamed: 0","Children's Play Area",'Gas Connection','Jogging Track','Intercom','Clubhouse','Indoor Games','Maintenance Staff', 'Clubhouse',
+            #  '24x7 Security','Landscaped Gardens',],axis=1)
+            # logging.info("Dropped unnecessary columns")
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
 
@@ -48,4 +50,7 @@ class DataIngestion:
 
 if __name__=="__main__":
     obj=DataIngestion()
-    obj.initateDataIngestion()
+    train_data,test_data=obj.initateDataIngestion()
+    
+    data_transform=DataTransformation()
+    data_transform.initiate_data_transform(train_data,test_data)
